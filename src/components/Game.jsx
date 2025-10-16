@@ -12,7 +12,7 @@ export default function Game() {
   const [upgrades, setUpgrades] = useState({
     clickIncrementor: 1,
     clickUpgradeCost: 10,
-    timeIncrementor: 0,
+    timeIncrementor: 1000000,
     timeUpgradeCost: 10
   })
 
@@ -20,6 +20,10 @@ export default function Game() {
 
   function incrementScore() {
     setScore(prev => prev + clickIncrementor);
+  }
+
+  function incrementTimeScore() {
+    setScore(prev => prev + timeIncrementor);
   }
 
   function upgradeClicker() {
@@ -38,6 +42,7 @@ export default function Game() {
   }
 
   console.log(upgrades);
+  setInterval(incrementTimeScore, 10000);
 
   return (
     <>

@@ -7,7 +7,12 @@ import { useEffect, useState } from "react";
 
 export default function Game() {
   const [score, setScore] = useState(0);
-  //award state here
+  const [awards, setAwards] = useState([]);
+  const [awardTrack, setAwardTrack] = useState({
+    bronze: false,
+    silver: false,
+    gold: false,
+  })
   const [upgrades, setUpgrades] = useState({
     clickIncrementor: 1,
     clickUpgradeCost: 10,
@@ -46,7 +51,27 @@ export default function Game() {
   }
 
   function updateRewards() {
-    // switch(score)
+    if (score > 30 && !awardTrack.gold) {
+      setAwards(prev => ['🥇', ...prev])
+      setAwardTrack(prev => ({
+        ...prev,
+        gold: true
+      }))
+    }
+    else if (score > 20 && !awardTrack.silver) {
+      setAwards(prev => ['🥈', ...prev])
+      setAwardTrack(prev => ({
+        ...prev,
+        silver: true
+      }))
+    }
+    else if (score > 10 && !awardTrack.bronze) {
+      setAwards(['🥉']);
+      setAwardTrack(prev => ({
+        ...prev,
+        bronze: true
+      }))
+    }
   }
 
   useEffect(() => {
@@ -59,7 +84,9 @@ export default function Game() {
     return () => clearInterval(intervalId);
   });
 
-  console.log(upgrades);
+  const awardsDisplay = awards.map(award => <li>{award}</li>)
+
+  // console.log(upgrades);
 
   return (
     <div>
@@ -75,16 +102,10 @@ export default function Game() {
       </div>
       <div className="upgradeDiv">
         <p>Upgrade Clicker</p>
-        <button onClick={upgradeClicker} id="upgrade-clicker">
-          Upgrade
-        </button>
-      </div>
-      <div className="upgradeDiv">
-        <p>Upgrade Clicker</p>
         <button id="upgrade-timer">Upgrade</button>
       </div>
       <div className="awardsDiv">
-        <ul>{/* awards go here */}</ul>
+        <ul>{awardsDisplay}</ul>
       </div>
     </div>
   );

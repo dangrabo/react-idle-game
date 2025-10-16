@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //Requirements
 //Single number: score
@@ -45,8 +45,13 @@ export default function Game() {
     });
   }
 
+  useEffect(() => {
+    const intervalId = setInterval(incrementTimeScore, 1000);
+    return () => clearInterval(intervalId);
+  })
+
   console.log(upgrades);
-  setInterval(incrementTimeScore, 10000);
+  
 
   return (
     <>

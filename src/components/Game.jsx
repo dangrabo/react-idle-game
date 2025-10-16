@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //Requirements
 //Single number: score
@@ -11,9 +11,9 @@ export default function Game() {
   const [upgrades, setUpgrades] = useState({
     clickIncrementor: 1,
     clickUpgradeCost: 10,
-    timeIncrementor: 0,
-    timeUpgradeCost: 10,
-  });
+    timeIncrementor: 1000000,
+    timeUpgradeCost: 10
+  })
 
   const {
     clickIncrementor,
@@ -24,6 +24,10 @@ export default function Game() {
 
   function incrementScore() {
     setScore((prev) => prev + clickIncrementor);
+  }
+
+  function incrementTimeScore() {
+    setScore(prev => prev + timeIncrementor);
   }
 
   function upgradeClicker() {
@@ -41,10 +45,17 @@ export default function Game() {
     });
   }
 
+  useEffect(() => {
+    const intervalId = setInterval(incrementTimeScore, 1000);
+    return () => clearInterval(intervalId);
+  })
+
   console.log(upgrades);
+  
 
   return (
     <>
+    <div>
       <h1>{score}</h1>
       <button onClick={incrementScore} id="clicker">
         Click me
@@ -61,6 +72,7 @@ export default function Game() {
       </div>
       <div className="awardsDiv">
         <ul>{/* awards go here */}</ul>
+      </div>
       </div>
     </>
   );

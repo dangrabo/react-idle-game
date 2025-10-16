@@ -51,7 +51,7 @@ export default function Game() {
   }
 
   function upgradeTimer() {
-    if (score < clickUpgradeCost) {
+    if (score < timeUpgradeCost) {
       alert("Not enough score");
       return;
     }
@@ -97,12 +97,14 @@ export default function Game() {
     return () => clearInterval(intervalId);
   });
 
-  const awardsDisplay = awards.map((award, index) => <li key={index}>{award}</li>);
+  const awardsDisplay = awards.map((award, index) => (
+    <li key={index}>{award}</li>
+  ));
 
   // console.log(upgrades);
 
   return (
-    <div>
+    <div className="game-container">
       <h1>{score}</h1>
       <button onClick={incrementScore} id="clicker">
         Click me
@@ -114,7 +116,7 @@ export default function Game() {
         </button>
       </div>
       <div className="upgradeDiv">
-        <p>Upgrade Clicker</p>
+        <p>Upgrade Timer</p>
         <button onClick={upgradeTimer} id="upgrade-timer">
           Cost: {timeUpgradeCost}
         </button>

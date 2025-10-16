@@ -55,6 +55,7 @@ export default function Game() {
 
   return (
     <>
+    <div>
       <h1>{score}</h1>
       <button onClick={incrementScore} id="clicker">
         Click me
@@ -71,6 +72,7 @@ export default function Game() {
       </div>
       <div className="awardsDiv">
         <ul>{/* awards go here */}</ul>
+      </div>
       </div>
     </>
   );

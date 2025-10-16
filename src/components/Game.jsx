@@ -12,8 +12,8 @@ export default function Game() {
     clickIncrementor: 1,
     clickUpgradeCost: 10,
     timeIncrementor: 0,
-    timeUpgradeCost: 10
-  })
+    timeUpgradeCost: 10,
+  });
 
   const {
     clickIncrementor,
@@ -27,7 +27,7 @@ export default function Game() {
   }
 
   function incrementTimeScore() {
-    setScore(prev => prev + timeIncrementor);
+    setScore((prev) => prev + timeIncrementor);
   }
 
   function upgradeClicker() {
@@ -46,7 +46,7 @@ export default function Game() {
   }
 
   function updateRewards() {
-    switch(score)
+    // switch(score)
   }
 
   useEffect(() => {
@@ -57,13 +57,11 @@ export default function Game() {
   useEffect(() => {
     const intervalId = setInterval(updateRewards, 100);
     return () => clearInterval(intervalId);
-  })
+  });
 
   console.log(upgrades);
-  
 
   return (
-    <>
     <div>
       <h1>{score}</h1>
       <button onClick={incrementScore} id="clicker">
@@ -77,12 +75,17 @@ export default function Game() {
       </div>
       <div className="upgradeDiv">
         <p>Upgrade Clicker</p>
+        <button onClick={upgradeClicker} id="upgrade-clicker">
+          Upgrade
+        </button>
+      </div>
+      <div className="upgradeDiv">
+        <p>Upgrade Clicker</p>
         <button id="upgrade-timer">Upgrade</button>
       </div>
       <div className="awardsDiv">
         <ul>{/* awards go here */}</ul>
       </div>
-      </div>
-    </>
+    </div>
   );
 }

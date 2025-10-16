@@ -11,7 +11,7 @@ export default function Game() {
   const [upgrades, setUpgrades] = useState({
     clickIncrementor: 1,
     clickUpgradeCost: 10,
-    timeIncrementor: 1000000,
+    timeIncrementor: 0,
     timeUpgradeCost: 10
   })
 
@@ -45,8 +45,17 @@ export default function Game() {
     });
   }
 
+  function updateRewards() {
+    switch(score)
+  }
+
   useEffect(() => {
-    const intervalId = setInterval(incrementTimeScore, 1000);
+    const intervalId = setInterval(incrementTimeScore, 10000);
+    return () => clearInterval(intervalId);
+  })
+
+  useEffect(() => {
+    const intervalId = setInterval(updateRewards, 100);
     return () => clearInterval(intervalId);
   })
 
@@ -63,7 +72,7 @@ export default function Game() {
       <div className="upgradeDiv">
         <p>Upgrade Clicker</p>
         <button onClick={upgradeClicker} id="upgrade-clicker">
-          Upgrade
+          Cost: {clickUpgradeCost}
         </button>
       </div>
       <div className="upgradeDiv">

@@ -1,9 +1,12 @@
-export default function Upgrade({ upgrade }) {
+export default function Upgrade({ upgrades, handleUpgrade, type }) {
+  
+  const upgradeCost = type === 'click' ? upgrades.clickUpgradeCost : upgrades.timeUpgradeCost;
+  
   return (
     <div className="upgradeDiv">
         <p>Upgrade Clicker</p>
-        <button onClick={upgradeClicker} id="upgrade-clicker">
-          Cost: {clickUpgradeCost}
+        <button onClick={handleUpgrade} id="upgrade-clicker">
+          Cost: {upgradeCost}
         </button>
       </div>
   )

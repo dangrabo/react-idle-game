@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Upgrade from "./Upgrade";
-
+import ScoreClick from "./ScoreClick";
 
 //Requirements
 //Single number: score
@@ -108,10 +108,13 @@ export default function Game() {
   return (
     <div className="game-container">
       <h1>{score}</h1>
-      <button onClick={incrementScore} id="clicker">
-        Click me
-      </button>
-      <Upgrade upgrade={upgrades} />
+      <ScoreClick handleClick={incrementScore} />
+      <div className="upgradeDiv">
+        <p>Upgrade Clicker</p>
+        <button onClick={upgradeClicker} id="upgrade-clicker">
+          Cost: {clickUpgradeCost}
+        </button>
+      </div>
       <div className="upgradeDiv">
         <p>Upgrade Timer</p>
         <button onClick={upgradeTimer} id="upgrade-timer">

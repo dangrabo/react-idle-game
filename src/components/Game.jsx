@@ -1,20 +1,10 @@
 import { useEffect, useState } from "react";
 import Upgrade from "./Upgrade";
 import ScoreClick from "./ScoreClick";
-
-//Requirements
-//Single number: score
-//Array: awards
-//Object: upgrade values
+import Awards from "./Awards";
 
 export default function Game() {
   const [score, setScore] = useState(0);
-  const [awards, setAwards] = useState([]);
-  const [awardTrack, setAwardTrack] = useState({
-    bronze: false,
-    silver: false,
-    gold: false,
-  });
   const [upgrades, setUpgrades] = useState({
     clickIncrementor: 1,
     clickUpgradeCost: 10,
@@ -22,101 +12,61 @@ export default function Game() {
     timeUpgradeCost: 10,
   });
 
-  const {
-    clickIncrementor,
-    clickUpgradeCost,
-    timeIncrementor,
-    timeUpgradeCost,
-  } = upgrades;
+  //descructure variables from upgrades object
+  const { clickIncrementor, timeIncrementor } = upgrades;
 
+  //give click score
   function incrementScore() {
     setScore((prev) => prev + clickIncrementor);
   }
 
+  //give time score
   function incrementTimeScore() {
     setScore((prev) => prev + timeIncrementor);
   }
 
-  function upgradeClicker() {
-    if (score < clickUpgradeCost) {
+  //give upgrades
+  function upgrade(type) {
+    const upgradeCostKey = `${type}UpgradeCost`;
+    const incrementorKey = `${type}Incrementor`;
+
+    const currentCost = upgrades[upgradeCostKey];
+    const currentIncrementor = upgrades[incrementorKey];
+
+    if (score < currentCost) {
       alert("Not enough score");
       return;
     }
 
-    setScore((prev) => prev - clickUpgradeCost);
+    setScore((prev) => prev - currentCost);
 
     setUpgrades({
       ...upgrades,
-      clickIncrementor: clickIncrementor * 2,
-      clickUpgradeCost: clickUpgradeCost * 2,
+      [incrementorKey]: currentIncrementor * 2,
+      [upgradeCostKey]: currentCost * 2,
     });
   }
 
-  function upgradeTimer() {
-    if (score < timeUpgradeCost) {
-      alert("Not enough score");
-      return;
-    }
-
-    setScore((prev) => prev - timeUpgradeCost);
-
-    setUpgrades({
-      ...upgrades,
-      timeIncrementor: timeIncrementor * 2,
-      timeUpgradeCost: timeUpgradeCost * 2,
-    });
-  }
-
-  function updateRewards() {
-    if (score > 30 && !awardTrack.gold) {
-      setAwards((prev) => [...prev, "🥇"]);
-      setAwardTrack((prev) => ({
-        ...prev,
-        gold: true,
-      }));
-    } else if (score > 20 && !awardTrack.silver) {
-      setAwards((prev) => [...prev, "🥈"]);
-      setAwardTrack((prev) => ({
-        ...prev,
-        silver: true,
-      }));
-    } else if (score > 10 && !awardTrack.bronze) {
-      setAwards(["🥉"]);
-      setAwardTrack((prev) => ({
-        ...prev,
-        bronze: true,
-      }));
-    }
-  }
-
+  //give time score
   useEffect(() => {
     const intervalId = setInterval(incrementTimeScore, 1000);
     return () => clearInterval(intervalId);
   });
-
-  useEffect(() => {
-    const intervalId = setInterval(updateRewards, 100);
-    return () => clearInterval(intervalId);
-  });
-
-  const awardsDisplay = awards.map((award, index) => (
-    <li key={index}>{award}</li>
-  ));
-
-  // console.log(upgrades + " parent");
 
   return (
     <div className="game-container">
       <ScoreClick handleClick={incrementScore} score={score} />
       <Upgrade
         upgrades={upgrades}
-        handleUpgrade={upgradeClicker}
+        handleUpgrade={() => upgrade("click")}
         type="click"
       />
-      <Upgrade upgrades={upgrades} handleUpgrade={upgradeTimer} type="time" />
-      <div className="awardsDiv">
-        <ul>{awardsDisplay}</ul>
-      </div>
+      <Upgrade
+        upgrades={upgrades}
+        handleUpgrade={() => upgrade("time")}
+        type="time"
+      />
+      <Awards score={score} />
     </div>
   );
 }

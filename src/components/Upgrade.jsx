@@ -4,7 +4,7 @@ export default function Upgrade({ upgrades, handleUpgrade, type }) {
   
   return (
     <div className="upgradeDiv">
-        <p>Upgrade Clicker</p>
+        <p>Upgrade {type}</p>
         <button onClick={handleUpgrade} id="upgrade-clicker">
           Cost: {upgradeCost}
         </button>

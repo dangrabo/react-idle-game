@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function Awards({ score }) {
   const [awards, setAwards] = useState([]);
@@ -10,13 +10,13 @@ export default function Awards({ score }) {
 
   function updateRewards() {
     if (score >= 30 && !awardTrack.gold) {
-      setAwards((prev) => [...prev, "🥇"]);
+      setAwards(() => ["🥇"]);
       setAwardTrack((prev) => ({
         ...prev,
         gold: true,
       }));
     } else if (score >= 20 && !awardTrack.silver) {
-      setAwards((prev) => [...prev, "🥈"]);
+      setAwards(() => ["🥈"]);
       setAwardTrack((prev) => ({
         ...prev,
         silver: true,

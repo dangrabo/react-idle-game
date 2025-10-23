@@ -17,7 +17,7 @@ export default function Game() {
 
   //give click score
   function incrementScore() {
-    setScore((prev) => prev + clickIncrementor);
+    score = score++;
   }
 
   //give time score

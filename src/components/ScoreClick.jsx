@@ -1,6 +1,6 @@
 import React from "react";
 
-function ScoreClick({ handleClick, score }) {
+function ScoreClick(handleClick, score) {
   return (
     <div>
       <h1>{score}</h1>
